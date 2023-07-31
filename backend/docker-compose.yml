@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_ROOT_PASSWORD: '1230.#Hh'
+      MYSQL_ROOT_HOST: '%'
+
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  spring-boot-full-project:
+    container_name: spring-boot-full-project
+    image: hamza0000g/spring-boot-full-project
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/customer
+    ports:
+      - "8088:8080"
+    networks:
+      - default
+    depends_on:
+      - db
+    restart: unless-stopped
+#    command:
+#      - --spring.datasource.url=jdbc:mysql://db:3306/customer
+volumes:
+  db:
+    driver: local

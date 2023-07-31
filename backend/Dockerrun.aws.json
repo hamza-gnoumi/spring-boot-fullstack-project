@@ -1,0 +1,24 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "gnamcode-api",
+      "image": "hamza0000g/spring-boot-full-project:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:mysql://awseb-e-cm72nfqtpp-stack-awsebrdsdatabase-thfxy1bctlkf.cvcfndwojsot.eu-west-3.rds.amazonaws.com:3306/customer"
+
+        }
+      ]
+    }
+  ]
+}
