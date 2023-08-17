@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -19,6 +18,8 @@ public class SpringBootFullProjectApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(SpringBootFullProjectApplication.class, args);
+		System.out.println("New Line");
+
 //	printBeans(applicationContext);
 
 	}
