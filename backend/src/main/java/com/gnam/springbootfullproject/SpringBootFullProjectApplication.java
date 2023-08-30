@@ -3,12 +3,12 @@ package com.gnam.springbootfullproject;
 import com.github.javafaker.Faker;
 import com.gnam.springbootfullproject.customer.Customer;
 import com.gnam.springbootfullproject.customer.CustomerRepository;
+import com.gnam.springbootfullproject.customer.Gender;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -32,11 +32,13 @@ public class SpringBootFullProjectApplication {
 			String lastname=faker.name().lastName().toLowerCase();
 			String name=firstname+lastname;
 			Random random=new Random();
+			int age=random.nextInt(16,99);
+			Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
 			Customer customer=new Customer(
 					name,
 					name+"@domain.com",
-					random.nextInt(16,99)
-			);
+					age,
+					gender);
 			List<Customer>customers=List.of(customer);
 			customerRepository.saveAll(customers);
 		};

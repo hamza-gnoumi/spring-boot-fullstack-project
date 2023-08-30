@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.ApplicationContext;
 
 import java.util.UUID;
 
@@ -33,8 +32,8 @@ class CustomerRepositoryTest extends AbstractTestcontainersUnit {
         Customer customer=new Customer(
                 FAKER.name().fullName(),
                 email,
-                19
-        );
+                19,
+                Gender.MALE);
         underTest.save(customer);
         boolean result= underTest.existsCustomerByEmail(email);
         assertThat(result).isTrue();
@@ -52,8 +51,8 @@ class CustomerRepositoryTest extends AbstractTestcontainersUnit {
         Customer customer=new Customer(
                 FAKER.name().fullName(),
                 email,
-                19
-        );
+                19,
+                Gender.MALE);
         underTest.save(customer);
         Long id=underTest.findAll()
                 .stream()

@@ -5,6 +5,7 @@ import com.github.javafaker.Name;
 import com.gnam.springbootfullproject.customer.Customer;
 import com.gnam.springbootfullproject.customer.CustomerRegistrationRequest;
 import com.gnam.springbootfullproject.customer.CustomerUpdateRequest;
+import com.gnam.springbootfullproject.customer.Gender;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,9 @@ public class CustomerIntegrationTest {
         String name= fakerName.fullName();
         String email=fakerName.lastName()+ UUID.randomUUID ()+"@domain.com";
         int age =RANDOM.nextInt(1,100);
+        Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
         CustomerRegistrationRequest request=new CustomerRegistrationRequest(
-            name, email, age
+            name, email, age, gender
         );
         // send a post request
         webTestClient.post()
@@ -65,8 +67,8 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
         // make sure that customer is present
         Customer expectedCustomer=new Customer(
-                name,email,age
-        );
+                name,email,age,
+                gender);
 
         assertThat(allCustomers)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
@@ -100,8 +102,10 @@ public class CustomerIntegrationTest {
         String name= fakerName.fullName();
         String email=fakerName.lastName()+ UUID.randomUUID ()+"@domain.com";
         int age =RANDOM.nextInt(1,100);
+        Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
+
         CustomerRegistrationRequest request=new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
         // send a post request
         webTestClient.post()
@@ -163,8 +167,10 @@ public class CustomerIntegrationTest {
         String name= fakerName.fullName();
         String email=fakerName.lastName()+ UUID.randomUUID ()+"@domain.com";
         int age =RANDOM.nextInt(1,100);
+        Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
+
         CustomerRegistrationRequest request=new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age,gender
         );
         // send a post request
         webTestClient.post()
@@ -225,8 +231,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         Customer expected=new Customer(
-                id,"Ali",email,age
-        );
+                id,"Ali",email,age, gender);
         Assertions.assertThat(expected).isEqualTo(updatedCustomer);
 
 

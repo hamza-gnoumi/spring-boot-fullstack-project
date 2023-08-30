@@ -28,6 +28,8 @@ class CustomerRowMapperTest {
                 .thenReturn("Ali");
         when(resultSet.getString("email"))
                 .thenReturn("ali@domain.com");
+        when(resultSet.getString("gender"))
+                .thenReturn("MALE");
 
         // When
         Customer customer = rowMapper.mapRow(resultSet, 1);
@@ -37,8 +39,8 @@ class CustomerRowMapperTest {
                 1L,
                 "Ali",
                 "ali@domain.com",
-                26
-        );
+                26,
+                Gender.MALE);
         assertThat(customer).isEqualTo(expected);
 
     }

@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -50,8 +49,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
 
@@ -85,7 +84,8 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request=
                 new CustomerRegistrationRequest(
                         "Alex","alex@domain.com",
-                        29
+                        29,
+                        Gender.MALE
                 );
 
         // When
@@ -113,7 +113,8 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request=
                 new CustomerRegistrationRequest(
                         "Alex",email,
-                        29
+                        29,
+                        Gender.MALE
                 );
 
         // When
@@ -168,8 +169,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         String email = "ali@domain.com";
@@ -201,8 +202,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         CustomerUpdateRequest updateRequest =
@@ -232,8 +233,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         String newEmail = "ali@domain.com";
@@ -265,8 +266,8 @@ class CustomerServiceTest {
         // Given
         Long id = 10L;
         Customer customer = new Customer(
-                "Alex", "alex@domain.com", 29
-        );
+                "Alex", "alex@domain.com", 29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         String newEmail = "ali@domain.com";
@@ -291,8 +292,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         CustomerUpdateRequest updateRequest =
@@ -322,8 +323,8 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29
-        );
+                "Alex","alex@domain.com",29,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(customer.getName(), customer.getEmail(), customer.getAge());

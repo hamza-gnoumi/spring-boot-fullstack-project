@@ -12,8 +12,8 @@ public class CustomerListDataAccessService implements CustomerDao{
     static
     {
         customers=new ArrayList<>();
-        Customer alex=new Customer(1L,"Alex","alex@domain.com",25);
-        Customer jamila=new Customer(2L,"jamila","jamila@domain.com",23);
+        Customer alex=new Customer(1L,"Alex","alex@domain.com",25, Gender.MALE);
+        Customer jamila=new Customer(2L,"jamila","jamila@domain.com",23, Gender.MALE);
         customers.add(alex);
         customers.add(jamila);
     }
