@@ -12,8 +12,8 @@ public class CustomerListDataAccessService implements CustomerDao{
     static
     {
         customers=new ArrayList<>();
-        Customer alex=new Customer(1L,"Alex","alex@domain.com",25, Gender.MALE);
-        Customer jamila=new Customer(2L,"jamila","jamila@domain.com",23, Gender.MALE);
+        Customer alex=new Customer(1L,"Alex", "password", "alex@domain.com",25, Gender.MALE);
+        Customer jamila=new Customer(2L,"jamila", "password", "jamila@domain.com",23, Gender.MALE);
         customers.add(alex);
         customers.add(jamila);
     }
@@ -46,6 +46,13 @@ public class CustomerListDataAccessService implements CustomerDao{
     public boolean existsCustomerById(Long id) {
         return customers.stream()
                 .anyMatch(c->c.getId().equals(id));
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customers.stream()
+                .filter(c->c.getUsername().equals(email))
+                .findFirst();
     }
 
     @Override

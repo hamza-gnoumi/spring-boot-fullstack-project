@@ -1,6 +1,9 @@
 package com.gnam.springbootfullproject.customer;
 
+import com.gnam.springbootfullproject.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,24 +12,31 @@ import java.util.List;
 @RequestMapping("api/v1/customers")
 public class CustomerController {
     private final   CustomerService customerService;
+    private final JWTUtil jwtUtil;
 @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, JWTUtil jwtUtil) {
         this.customerService = customerService;
-    }
+        this.jwtUtil = jwtUtil;
+}
 
     //@RequestMapping(path = "api/v1/customer" ,method = RequestMethod.GET)
     @GetMapping
-    public  List<Customer> getCustomers() {
+    public  List<CustomerDTO> getCustomers() {
         return customerService.getAllCustomers();
     }
     @GetMapping("{customerId}")
-    public  Customer getCustomer(@PathVariable("customerId")Long customerId) {
+    public  CustomerDTO getCustomer(@PathVariable("customerId")Long customerId) {
         return customerService.getCustomerById(customerId);
             }
 
     @PostMapping
-    public void registerCustomer(@RequestBody CustomerRegistrationRequest customer){
-    customerService.addCustomer(customer);
+    public ResponseEntity<?> registerCustomer(
+            @RequestBody CustomerRegistrationRequest request) {
+        customerService.addCustomer(request);
+        String jwtToken = jwtUtil.issueToken(request.email(), "ROLE_USER");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                .build();
     }
     @DeleteMapping("{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Long id){

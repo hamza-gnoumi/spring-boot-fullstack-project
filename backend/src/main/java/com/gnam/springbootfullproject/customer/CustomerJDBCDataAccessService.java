@@ -28,7 +28,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
     @Override
     public Optional<Customer> selectCustomerById(Long id) {
         var sql= """
-                select id,name,email,age,gender
+                select *
                 from customer
                 where id= ?
                 """;
@@ -44,14 +44,15 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
                  insert\s
                                         into
                                             customer
-                                            (age,email,gender,name)\s
+                                            (age,email,password,gender,name)\s
                                         values
-                                            (?,?,?,?)
+                                            (?,?,?,?,?)
                 """;
       int result =  jdbcTemplate.update(
                 sql,
                   customer.getAge(),
                   customer.getEmail(),
+                  customer.getPassword(),
                   customer.getGender().name(),
                   customer.getName()
 
@@ -129,5 +130,17 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
                 """;
         Integer count = jdbcTemplate.queryForObject(sql,Integer.class,id);
         return count!=null && count>0;
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        var sql= """
+                select *
+                from customer
+                where email= ?
+                """;
+        return jdbcTemplate.query(sql,customerRowMapper,email)
+                .stream()
+                .findFirst();
     }
 }

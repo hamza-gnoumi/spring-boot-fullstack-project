@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -23,7 +24,9 @@ public class SpringBootFullProjectApplication {
 
 	}
 	@Bean
-	CommandLineRunner innit(CustomerRepository customerRepository){
+	CommandLineRunner innit(
+			CustomerRepository customerRepository,
+			PasswordEncoder passwordEncoder){
 		return args -> {
 //			Customer alex=new Customer("Alex","alex@domain.com",25);
 //			Customer jamila=new Customer("jamila","jamila@domain.com",23);
@@ -36,6 +39,7 @@ public class SpringBootFullProjectApplication {
 			Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
 			Customer customer=new Customer(
 					name,
+                    passwordEncoder.encode(UUID.randomUUID().toString()),
 					name+"@domain.com",
 					age,
 					gender);

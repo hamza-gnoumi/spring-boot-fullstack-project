@@ -11,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,11 +25,15 @@ class CustomerServiceTest {
     private CustomerService underTest;
     @Mock
     private CustomerDao customerDao;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    private final CustomerDTOMapper customerDTOMapper=new CustomerDTOMapper();
 
 
     @BeforeEach
     void setUp() {
-        underTest=new CustomerService(customerDao);
+        underTest=new CustomerService(customerDao, customerDTOMapper, passwordEncoder);
     }
 
     @AfterEach
@@ -49,16 +54,16 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
-
+    CustomerDTO expectd=customerDTOMapper.apply(customer);
         // When
-        Customer actual =underTest.getCustomerById(id);
+        CustomerDTO actual =underTest.getCustomerById(id);
 
         // Then
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expectd);
     }
 
     @Test
@@ -84,9 +89,11 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request=
                 new CustomerRegistrationRequest(
                         "Alex","alex@domain.com",
-                        29,
+                        "password", 29,
                         Gender.MALE
                 );
+        String passwordHash="6546sdfdf.jkl";
+        when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         // When
         underTest.addCustomer(request);
@@ -102,6 +109,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(request.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email());
         assertThat(capturedCustomer.getAge()).isEqualTo(request.age());
+        assertThat(capturedCustomer.getPassword()).isEqualTo(passwordHash);
 
     }
     @Test
@@ -113,7 +121,7 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request=
                 new CustomerRegistrationRequest(
                         "Alex",email,
-                        29,
+                        "password", 29,
                         Gender.MALE
                 );
 
@@ -169,7 +177,7 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
@@ -202,7 +210,7 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
@@ -233,7 +241,7 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
@@ -266,7 +274,7 @@ class CustomerServiceTest {
         // Given
         Long id = 10L;
         Customer customer = new Customer(
-                "Alex", "alex@domain.com", 29,
+                "Alex", "password", "alex@domain.com", 29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
@@ -292,7 +300,7 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
@@ -323,7 +331,7 @@ class CustomerServiceTest {
         // Given
         Long id= 10L;
         Customer customer= new Customer(
-                "Alex","alex@domain.com",29,
+                "Alex", "password", "alex@domain.com",29,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));

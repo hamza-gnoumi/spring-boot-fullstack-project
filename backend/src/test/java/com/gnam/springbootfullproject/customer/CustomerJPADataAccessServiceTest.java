@@ -52,7 +52,7 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void insertCustomer() {
         Customer customer=new Customer(
-                1L,"ali","ali@domain.com",25,
+                1L,"ali", "password", "ali@domain.com",25,
                 Gender.MALE);
         underTest.insertCustomer(customer);
         verify(repo).save(customer);

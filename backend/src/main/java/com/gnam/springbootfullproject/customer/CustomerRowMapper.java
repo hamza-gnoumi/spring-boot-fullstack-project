@@ -13,6 +13,7 @@ public class CustomerRowMapper implements RowMapper<Customer> {
         Customer customer=new Customer(
                 rs.getLong("id"),
                 rs.getString("name"),
+                rs.getString("password"),
                 rs.getString("email"),
                 rs.getInt("age"),
                 Gender.valueOf(rs.getString("gender")));
