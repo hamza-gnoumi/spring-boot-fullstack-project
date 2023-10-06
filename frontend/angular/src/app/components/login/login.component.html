@@ -1,0 +1,32 @@
+<div class="flex " style="height: 99vh;">
+  <div class="col-6 m-3 flex flex-column justify-content-center">
+    <div class="m-auto">
+      <div class="text-center">
+        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" styleClass="mr-2"
+          size="xlarge" shape="circle"></p-avatar>
+        <h1>Sign in to your account</h1>
+      </div>
+      <p-message *ngIf="errMsg" severity="error" [text]="errMsg" styleClass="mb-2"></p-message>
+      <div class="field">
+        <label for="email">Email</label>
+        <input [(ngModel)]="userlogin.username" type="text" id="email" pInputText placeholder="Ali@domain.com"
+          class="w-full">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input [(ngModel)]="userlogin.password" type="password" id="password" pInputText placeholder="password"
+          class="w-full">
+      </div>
+      <button pButton label="Login" class="w-full" (click)="login()"></button>
+      <button pButton label="Don't have an account? Signup now." class="w-full p-button-link text-left pl-0"
+        (click)="register()"></button>
+    </div>
+  </div>
+  <div class="col-6 flex flex-column justify-content-center align-items-center right-container ">
+    <h1>
+      <a href="#" target="_blank">Enroll Now</a>
+    </h1>
+    <img class="background p-6 pt-0"
+      src="https://www.pngitem.com/pimgs/m/197-1977671_mimeo-photos-desktop-computer-hd-png-download.png" alt="Enroll">
+  </div>
+</div>

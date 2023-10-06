@@ -16,12 +16,10 @@ import java.util.*;
 @SpringBootApplication
 public class SpringBootFullProjectApplication {
 
-
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext =
 				SpringApplication.run(SpringBootFullProjectApplication.class, args);
 //	printBeans(applicationContext);
-
 	}
 	@Bean
 	CommandLineRunner innit(
@@ -39,7 +37,7 @@ public class SpringBootFullProjectApplication {
 			Gender gender=age % 2==0 ? Gender.MALE:Gender.FEMALE;
 			Customer customer=new Customer(
 					name,
-                    passwordEncoder.encode(UUID.randomUUID().toString()),
+                    passwordEncoder.encode("password"),
 					name+"@domain.com",
 					age,
 					gender);

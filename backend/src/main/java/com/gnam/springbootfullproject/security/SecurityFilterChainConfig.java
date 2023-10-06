@@ -12,6 +12,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityFilterChainConfig {
@@ -31,6 +33,7 @@ public class SecurityFilterChainConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(withDefaults())
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(
                                 HttpMethod.POST,
@@ -49,5 +52,8 @@ public class SecurityFilterChainConfig {
                                 .authenticationEntryPoint(authenticationEntryPoint));
                 return http.build();
     }
+
+
+
 
 }

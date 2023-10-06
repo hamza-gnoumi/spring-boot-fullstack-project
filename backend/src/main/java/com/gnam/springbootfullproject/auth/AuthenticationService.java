@@ -31,8 +31,6 @@ public class AuthenticationService {
                         request.password()
                 )
         );
-        System.out.println("-------------- token ------------"+authentication.getPrincipal().toString());
-
         Customer principal = (Customer) authentication.getPrincipal();
         CustomerDTO customerDTO = customerDTOMapper.apply(principal);
         String token = jwtUtil.issueToken(customerDTO.username(), customerDTO.roles());
