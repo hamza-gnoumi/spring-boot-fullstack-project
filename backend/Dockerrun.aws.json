@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "gnamcode-api",
-      "image": "hamza0000g/spring-boot-full-project:06.10.2023.10.57.33",
+      "image": "hamza0000g/spring-boot-full-project:10.10.2023.00.04.43",
       "essential": true,
       "memory": 512,
       "portMappings": [
